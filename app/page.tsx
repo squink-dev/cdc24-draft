@@ -173,7 +173,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
+                className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
               >
                 <path
                   fill-rule="evenodd"
@@ -188,7 +188,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
+                className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
               >
                 <path
                   fill-rule="evenodd"
@@ -202,7 +202,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
+                className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
               >
                 <path
                   fill-rule="evenodd"
