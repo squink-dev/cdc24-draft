@@ -78,12 +78,37 @@ body {
   text-transform: uppercase;
 }
 
+#bolsterBoldBig {
+  font-family: "BolsterBold", sans-serif;
+  font-size: 240px;
+  text-transform: uppercase;
+}
+
+#bolsterBoldBigger {
+  font-family: "BolsterBold", sans-serif;
+  font-size: 300px;
+  text-transform: uppercase;
+}
+
+#bolsterBoldBiggest {
+  font-family: "BolsterBold", sans-serif;
+  font-size: 240px;
+  text-transform: uppercase;
+  line-height: 80%;
+  font-style: italic;
+}
+
 #playBold {
   font-family: "PlayBold", sans-serif;
 }
 
 #rubik {
   font-family: "Rubik", sans-serif;
+}
+
+#drafted {
+  background-image: url("../public/elements/drafted-bg.png");
+  background-repeat: no-repeat;
 }
 
 @layer utilities {

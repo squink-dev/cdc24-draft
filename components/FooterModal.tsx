@@ -48,13 +48,13 @@ export default function FooterModal() {
             onClick={openPlayerModal}
             className="bg-cdc-grey border-4 border-cdc-darkgrey text-cdc-lightgrey uppercase w-1/2 h-10 m-2 text-2xl"
           >
-            Player List
+            <div className="-translate-y-0.5">Player List</div>
           </button>
           <button
             onClick={openTeamModal}
             className="bg-cdc-grey border-4 border-cdc-darkgrey text-cdc-lightgrey uppercase w-1/2 h-10 m-2 text-2xl"
           >
-            Team List
+            <div className="-translate-y-0.5">Team List</div>
           </button>
         </div>
       </div>

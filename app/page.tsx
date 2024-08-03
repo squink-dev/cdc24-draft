@@ -118,10 +118,13 @@ export default function Home() {
         {/* Middle Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Large Team Box */}
-          <div className="flex-grow bg-gray-200 p-4 text-xl">
+          <div className="flex-grow bg-cdc-darkgrey p-4 pt-10 text-2xl text-white">
             <div id="bolsterBold">
-              <text>Team jiaxunjason</text>
+              <div className="fixed -translate-y-8">
+                <text>Team jiaxunjason</text>
+              </div>
             </div>
+
             <CurrentPlayerCard
               username="Squink"
               avatar_url="https://a.ppy.sh/2012453"
@@ -170,7 +173,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="size-6 stroke-cdc-darkred stroke-2"
+                class="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
               >
                 <path
                   fill-rule="evenodd"
@@ -185,7 +188,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="size-6 stroke-cdc-darkred stroke-2"
+                class="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
               >
                 <path
                   fill-rule="evenodd"
@@ -199,7 +202,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="size-6 stroke-cdc-darkred stroke-2"
+                class="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
               >
                 <path
                   fill-rule="evenodd"

@@ -21,6 +21,28 @@ const config: Config = {
         "cdc-darkgrey": "#282828",
         "cdc-lightgrey": "#A9A9A9",
       },
+      rotate: {
+        "60": "60deg",
+      },
+      animation: {
+        "leftright-scroll": "leftright-scroll 30s linear infinite",
+        "rightleft-scroll": "rightleft-scroll 30s linear infinite",
+        "draft-scroll": "draft-scroll 0.8s ease-out",
+      },
+      keyframes: {
+        "leftright-scroll": {
+          from: { transform: "translateX(-100%)" },
+          to: { transform: "translateX(0)" },
+        },
+        "rightleft-scroll": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
+        "draft-scroll": {
+          from: { transform: "translateX(-30%)" },
+          to: { transform: "translateX(0%)" },
+        },
+      },
     },
   },
   plugins: [],
