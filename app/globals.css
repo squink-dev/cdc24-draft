@@ -98,6 +98,14 @@ body {
   font-style: italic;
 }
 
+#name {
+  font-family: "BolsterBold", sans-serif;
+  font-size: 500px;
+  text-transform: uppercase;
+  line-height: 80%;
+  font-style: italic;
+  -webkit-text-stroke: 5px #ff4343;
+}
 #playBold {
   font-family: "PlayBold", sans-serif;
 }

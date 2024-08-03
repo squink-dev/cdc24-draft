@@ -28,20 +28,23 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
 
   return (
     <div
-      id="drafted"
-      className={`fixed inset-0 z-50 flex items-end justify-center transition-opacity duration-500 ${
+      className={`fixed inset-0 z-10 bg-black bg-opacity-80 flex items-end justify-center transition-opacity duration-500 ${
         visible ? "opacity-100" : "opacity-0"
       }`}
     >
       <div
+        id="drafted"
+        className="fixed inset-0 z-30 flex items-end justify-center"
+      ></div>
+      <div
         id="bolsterBoldBig"
-        className="fixed rotate-60 opacity-45 -translate-x-[63%] -translate-y-[50%] text-cdc-lightgrey"
+        className="fixed z-50 rotate-60 opacity-45 -translate-x-[63%] -translate-y-[50%] text-cdc-lightgrey"
       >
         <div className="animate-rightleft-scroll">drafted</div>
       </div>
       <div
         id="bolsterBoldBigger"
-        className={`fixed rotate-60 opacity-30 -translate-x-[55%] -translate-y-[-150%] text-cdc-lightgrey transition-opacity duration-5000 ${
+        className={`fixed z-50 rotate-60 opacity-30 -translate-x-[55%] -translate-y-[-150%] text-cdc-lightgrey transition-opacity duration-5000 ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -50,12 +53,22 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
 
       <div
         id="bolsterBoldBiggest"
-        className="fixed text-cdc-red text-right -z-50 translate-y-[-188%] -translate-x-[2%]"
+        className="fixed z-40 text-cdc-red text-right right-10 -top-5"
       >
-        <div className="animate-draft-scroll">Team JiaxunJason</div>
+        <div className="animate-draft-scroll">
+          Team<br></br>jiaxunjason
+        </div>
       </div>
+
       <div
-        className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[25%] p-10 bg-white border border-gray-300 shadow-lg transition-opacity duration-500 ${
+        id="name"
+        className="fixed z-20 text-right -right-[25%] opacity-100 text-transparent text-nowrap"
+      >
+        <div className="animate-rightleft-scrollslow">gender bender</div>
+      </div>
+
+      <div
+        className={`fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[25%] p-10 bg-white border border-gray-300 shadow-lg transition-opacity duration-500 ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       >

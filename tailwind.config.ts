@@ -28,6 +28,7 @@ const config: Config = {
         "leftright-scroll": "leftright-scroll 30s linear infinite",
         "rightleft-scroll": "rightleft-scroll 30s linear infinite",
         "draft-scroll": "draft-scroll 0.8s ease-out",
+        "rightleft-scrollslow": "rightleft-scrollslow 60s linear infinite",
       },
       keyframes: {
         "leftright-scroll": {
@@ -41,6 +42,10 @@ const config: Config = {
         "draft-scroll": {
           from: { transform: "translateX(-30%)" },
           to: { transform: "translateX(0%)" },
+        },
+        "rightleft-scrollslow": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
         },
       },
     },
