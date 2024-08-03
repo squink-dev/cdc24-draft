@@ -15,6 +15,11 @@ const config: Config = {
       },
       colors: {
         "green-screen": "#00FF00",
+        "cdc-red": "#FF4343",
+        "cdc-darkred": "#620000",
+        "cdc-grey": "#424242",
+        "cdc-darkgrey": "#282828",
+        "cdc-lightgrey": "#A9A9A9",
       },
     },
   },

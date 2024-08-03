@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "BolsterBold";
+  src: url("../fonts/BolsterBold Bold.ttf");
+}
+
+@font-face {
+  font-family: "PlayBold";
+  src: url("../fonts/Play-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url("../fonts/RubikMonoOne-Regular.ttf");
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 200, 200, 200;
@@ -17,6 +32,10 @@
 }
 
 body {
+  background-image: url("../public/elements/background.png");
+  background-repeat: no-repeat;
+
+  /*
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -24,6 +43,47 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  */
+}
+
+#top {
+  font-family: "BolsterBold", sans-serif;
+  text-transform: uppercase;
+}
+
+#mainPlayerCard {
+  font-family: "Rubik", sans-serif;
+  text-transform: uppercase;
+}
+
+#subPlayerCard {
+  font-family: "Rubik", sans-serif;
+  text-transform: uppercase;
+}
+
+#searchBar {
+  font-family: "PlayBold", sans-serif;
+  text-transform: uppercase;
+}
+
+#footer {
+  background-image: url("../public/elements/footer-bg.png");
+  background-repeat: no-repeat;
+
+  font-family: "BolsterBold", sans-serif;
+}
+
+#bolsterBold {
+  font-family: "BolsterBold", sans-serif;
+  text-transform: uppercase;
+}
+
+#playBold {
+  font-family: "PlayBold", sans-serif;
+}
+
+#rubik {
+  font-family: "Rubik", sans-serif;
 }
 
 @layer utilities {

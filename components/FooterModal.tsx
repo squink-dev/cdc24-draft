@@ -42,19 +42,21 @@ export default function FooterModal() {
   return (
     <div className="relative">
       {/* Footer Buttons */}
-      <div className="flex bg-gray-800 p-4">
-        <button
-          onClick={openPlayerModal}
-          className="bg-green-500 text-white py-2 w-1/2 m-2"
-        >
-          Open Full Player List
-        </button>
-        <button
-          onClick={openTeamModal}
-          className="bg-green-500 text-white py-2 w-1/2 m-2"
-        >
-          Open Full Team List
-        </button>
+      <div id="footer">
+        <div className="flex p-4">
+          <button
+            onClick={openPlayerModal}
+            className="bg-cdc-grey border-4 border-cdc-darkgrey text-cdc-lightgrey uppercase w-1/2 h-10 m-2 text-2xl"
+          >
+            Player List
+          </button>
+          <button
+            onClick={openTeamModal}
+            className="bg-cdc-grey border-4 border-cdc-darkgrey text-cdc-lightgrey uppercase w-1/2 h-10 m-2 text-2xl"
+          >
+            Team List
+          </button>
+        </div>
       </div>
 
       {/* Player List Modal */}

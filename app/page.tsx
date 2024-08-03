@@ -7,10 +7,18 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col">
       {/* Top Bar */}
-      <div className="pt-4 pl-4 pr-4 flex justify-center space-x-4">
-        <div className="text-lg">Last Pick: cillian</div>
-        <div className="font-bold text-2xl">Currently Picking: jykca</div>
-        <div className="text-lg">Next Pick: Laser__</div>
+      <div id="top">
+        <div className="columns-3 gap-4">
+          <div className="text-cdc-darkred text-3xl text-right">
+            Last Pick: jiaxunjason
+          </div>
+          <div className="pt-2 pb-2 text-white text-3xl text-center mix-blend-difference">
+            Currently Picking: jiaxunjason
+          </div>
+          <div className="text-cdc-darkred text-3xl text-left">
+            Next Pick: jiaxunjason
+          </div>
+        </div>
       </div>
 
       {/* Main Content Area */}
@@ -110,8 +118,10 @@ export default function Home() {
         {/* Middle Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Large Team Box */}
-          <div className="flex-grow bg-gray-200 p-4">
-            <text>Team jykca</text>
+          <div className="flex-grow bg-gray-200 p-4 text-xl">
+            <div id="bolsterBold">
+              <text>Team jiaxunjason</text>
+            </div>
             <CurrentPlayerCard
               username="Squink"
               avatar_url="https://a.ppy.sh/2012453"
@@ -154,15 +164,49 @@ export default function Home() {
             />
           </div>
           {/* Buttons Area */}
-          <div className="flex space-x-4">
-            <button className="bg-green-500 text-white py-2 flex-grow">
-              Last Team
+          <div className="justify-center items-center flex space-x-4">
+            <button className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6 stroke-cdc-darkred stroke-2"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </button>
-            <button className="bg-green-500 text-white py-2 flex-grow">
-              Undo Pick
+
+            <button className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6 stroke-cdc-darkred stroke-2"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9.53 2.47a.75.75 0 0 1 0 1.06L4.81 8.25H15a6.75 6.75 0 0 1 0 13.5h-3a.75.75 0 0 1 0-1.5h3a5.25 5.25 0 1 0 0-10.5H4.81l4.72 4.72a.75.75 0 1 1-1.06 1.06l-6-6a.75.75 0 0 1 0-1.06l6-6a.75.75 0 0 1 1.06 0Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </button>
-            <button className="bg-green-500 text-white py-2 flex-grow">
-              Next Team
+            <button className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6 stroke-cdc-darkred stroke-2"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </button>
           </div>
         </div>
