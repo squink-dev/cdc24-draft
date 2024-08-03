@@ -27,6 +27,18 @@ export default function FooterModal() {
     setTimeout(() => setTeamModalOpen(false), 300); // Match animation duration
   };
 
+  const handleOverlayClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (e.target === e.currentTarget) {
+      if (isPlayerModalOpen) {
+        closePlayerModal();
+      } else if (isTeamModalOpen) {
+        closeTeamModal();
+      }
+    }
+  };
+
   return (
     <div className="relative">
       {/* Footer Buttons */}
@@ -48,14 +60,18 @@ export default function FooterModal() {
       {/* Player List Modal */}
       {isPlayerModalOpen && (
         <div
-          className={`fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 ${isAnimating ? "slide-up" : "slide-down"}`}
+          onClick={handleOverlayClick}
+          className={`fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-end justify-center ${
+            isAnimating ? "fade-in" : "fade-out"
+          }`}
         >
-          <div className="bg-white p-8 w-full h-full">
-            <button onClick={closePlayerModal} className="text-red-500">
-              Close Player List
-            </button>
-            <h1>Full Player List</h1>
-            {/* Add your player list content here */}
+          <div
+            className={`bg-white p-8 w-[90%] h-[68%] rounded-t-md relative shadow-lg ${
+              isAnimating ? "slide-up" : "slide-down"
+            }`}
+          >
+            <h1 className="text-xl font-bold mb-4">Full Player List</h1>
+            {/* player list content here */}
           </div>
         </div>
       )}
@@ -63,25 +79,29 @@ export default function FooterModal() {
       {/* Team List Modal */}
       {isTeamModalOpen && (
         <div
-          className={`fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 ${isAnimating ? "slide-up" : "slide-down"}`}
+          onClick={handleOverlayClick}
+          className={`fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-end justify-center ${
+            isAnimating ? "fade-in" : "fade-out"
+          }`}
         >
-          <div className="bg-white p-8 w-full h-full">
-            <button onClick={closeTeamModal} className="text-red-500">
-              Close Team List
-            </button>
-            <h1>Full Team List</h1>
-            {/* Add your team list content here */}
+          <div
+            className={`bg-white p-8 w-[90%] h-[68%] rounded-t-md relative shadow-lg ${
+              isAnimating ? "slide-up" : "slide-down"
+            }`}
+          >
+            <h1 className="text-xl font-bold mb-4">Full Team List</h1>
+            {/* team list content here */}
           </div>
         </div>
       )}
 
       <style jsx>{`
         .slide-up {
-          animation: slide-up 0.3s ease-out forwards;
+          animation: slide-up 0.25s ease-out forwards;
         }
 
         .slide-down {
-          animation: slide-down 0.3s ease-out forwards;
+          animation: slide-down 0.25s ease-out forwards;
         }
 
         @keyframes slide-up {
@@ -99,6 +119,32 @@ export default function FooterModal() {
           }
           to {
             transform: translateY(100%);
+          }
+        }
+
+        .fade-in {
+          animation: fade-in 0.25s forwards;
+        }
+
+        .fade-out {
+          animation: fade-out 0.25s forwards;
+        }
+
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes fade-out {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
           }
         }
       `}</style>
