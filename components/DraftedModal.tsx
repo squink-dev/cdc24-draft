@@ -81,7 +81,7 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
           <h2 className="text-2xl font-bold mt-8">
             {user.username.toUpperCase()}
           </h2>
-          <h2 className="text-2xl font-bold text-center">{"TEAM TEMPORARY"}</h2>
+          <h2 className="text-2xl font-bold text-center">TEAM TEMPORARY</h2>
           <div className="flex justify-between w-full mt-2 text-xl font-semibold">
             <span className="text-left">RANK</span>
             <span className="text-right">

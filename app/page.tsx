@@ -26,93 +26,13 @@ export default function Home() {
         {/* First Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Picked Teams */}
-          <div className="flex space-x-4">
-            <div className="flex-1 bg-gray-200 p-4">
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-            </div>
-            <div className="flex-1 bg-gray-200 p-4">
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={100000}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-            </div>
+          <div className="flex space-x-4 ">
+            <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
+            <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
           </div>
-          <SearchBox />
+          <div className="border-2 border-cdc-darkgrey">
+            <SearchBox />
+          </div>
         </div>
 
         {/* Middle Column */}
@@ -120,51 +40,11 @@ export default function Home() {
           {/* Large Team Box */}
           <div className="flex-grow bg-cdc-darkgrey p-4 pt-10 text-2xl text-white">
             <div id="bolsterBold">
+              {/* TODO: Change away from fixed*/}
               <div className="fixed -translate-y-8">
                 <text>Team jiaxunjason</text>
               </div>
             </div>
-
-            <CurrentPlayerCard
-              username="Squink"
-              avatar_url="https://a.ppy.sh/2012453"
-              bws_rank={199999}
-            />
-            <CurrentPlayerCard
-              username="Squink"
-              avatar_url="https://a.ppy.sh/2012453"
-              bws_rank={1}
-            />
-            <CurrentPlayerCard
-              username="Squink"
-              avatar_url="https://a.ppy.sh/2012453"
-              bws_rank={1}
-            />
-            <CurrentPlayerCard
-              username="Squink"
-              avatar_url="https://a.ppy.sh/2012453"
-              bws_rank={1}
-            />
-            <CurrentPlayerCard
-              username="Squink"
-              avatar_url="https://a.ppy.sh/2012453"
-              bws_rank={1}
-            />
-            <CurrentPlayerCard
-              username="Squink"
-              avatar_url="https://a.ppy.sh/2012453"
-              bws_rank={1}
-            />
-            <CurrentPlayerCard
-              username="Squink"
-              avatar_url="https://a.ppy.sh/2012453"
-              bws_rank={1}
-            />
-            <CurrentPlayerCard
-              username="Squink"
-              avatar_url="https://a.ppy.sh/2012453"
-              bws_rank={1}
-            />
           </div>
           {/* Buttons Area */}
           <div className="justify-center items-center flex space-x-4">
@@ -218,93 +98,11 @@ export default function Home() {
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Upcoming Teams */}
           <div className="flex space-x-4">
-            <div className="flex-1 bg-gray-200 p-4">
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-            </div>
-            <div className="flex-1 bg-gray-200 p-4">
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-              <PlayerCard
-                username="Squink"
-                avatar_url="https://a.ppy.sh/2012453"
-                bws_rank={1}
-              />
-            </div>
+            <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
+            <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
           </div>
           {/* Discord Captain Chat */}
-          <div className="flex-grow bg-green-screen p-4"></div>
+          <div className="flex-grow bg-green-screen p-4 border-2 border-cdc-darkgrey"></div>
         </div>
       </div>
 
