@@ -1,7 +1,5 @@
 import FooterModal from "@/components/FooterModal";
 import SearchBox from "@/components/SearchBox";
-import PlayerCard from "@/components/PlayerCard";
-import CurrentPlayerCard from "@/components/CurrentPlayerCard";
 
 export default function Home() {
   return (
@@ -25,7 +23,8 @@ export default function Home() {
       <div className="flex-grow flex">
         {/* First Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
-          {/* Picked Teams */}
+          {/* Already Picked Teams */}
+          {/* TODO: Add column header */}
           <div className="flex space-x-4 ">
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
@@ -39,9 +38,9 @@ export default function Home() {
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Large Team Box */}
           <div className="flex-grow bg-cdc-darkgrey p-4 pt-10 text-2xl text-white">
+            {/* TODO: Keep this? Duplicate text to the header above */}
             <div id="bolsterBold">
-              {/* TODO: Change away from fixed*/}
-              <div className="fixed -translate-y-8">
+              <div className="-translate-y-8">
                 <text>Team jiaxunjason</text>
               </div>
             </div>
@@ -97,6 +96,7 @@ export default function Home() {
         {/* Third Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Upcoming Teams */}
+          {/* TODO: Add column header */}
           <div className="flex space-x-4">
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
