@@ -86,15 +86,18 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
           <h2 id="rubik" className="text-2xl text-white mt-8">
             {user.username.toUpperCase()}
           </h2>
-          <h2 id="bolsterBold" className="text-2xl text-white text-center">
+          <h2
+            id="bolsterBold"
+            className="text-2xl text-cdc-lightgrey text-center"
+          >
             Team {teamName}
           </h2>
           <div
-            id="playBold"
-            className="flex justify-between w-full mt-2 text-xl text-white font-semibold"
+            id="bolsterBold"
+            className="flex justify-between w-full mt-2 text-xl text-cdc-lightgrey font-semibold"
           >
-            <span className="text-left">Rank</span>
-            <span className="text-right">
+            <span className="text-left">RANK</span>
+            <span id="bolsterBold" className="text-right">
               #{user.bws_rank.toLocaleString()}
             </span>
           </div>

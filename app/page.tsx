@@ -351,7 +351,7 @@ export default function Home() {
             <div className="flex space-x-4 ">
               <div
                 id="subPlayerBG"
-                className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+                className="flex-1 bg-gray-200 p-1 h-[430px] border-2 border-cdc-grey"
               >
                 {prevTeams[1] !== undefined && (
                   <>
@@ -375,7 +375,7 @@ export default function Home() {
               </div>
               <div
                 id="subPlayerBG"
-                className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+                className="flex-1 bg-gray-200 p-1 h-[430px] border-2 border-cdc-grey"
               >
                 {prevTeams[0] !== undefined && (
                   <>
@@ -504,7 +504,7 @@ export default function Home() {
             <div className="flex space-x-4">
               <div
                 id="subPlayerBG"
-                className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+                className="flex-1 bg-gray-200 p-1 h-[430px] border-2 border-cdc-grey"
               >
                 {nextTeams[0] !== undefined && (
                   <>
@@ -528,7 +528,7 @@ export default function Home() {
               </div>
               <div
                 id="subPlayerBG"
-                className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+                className="flex-1 bg-gray-200 p-1 h-[430px] border-2 border-cdc-grey"
               >
                 {nextTeams[1] !== undefined && (
                   <>
