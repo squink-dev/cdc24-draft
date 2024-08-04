@@ -27,8 +27,8 @@ export default function PlayerCard({
         <div className="flex-grow">
           <div className="">{username}</div>
         </div>
-        <div id="playBold">
-          <div className="text-gray-600 text-lg">
+        <div id="bolsterBold">
+          <div className="text-cdc-lightgrey text-lg ">
             {"#" + bws_rank.toLocaleString()}
           </div>
         </div>

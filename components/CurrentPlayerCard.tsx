@@ -29,7 +29,7 @@ const CurrentPlayerCard: React.FC<PlayerCardProps> = ({
           </div>
         </div>
         <div id="bolsterBold">
-          <div className="text-white text-2xl">
+          <div className="text-cdc-lightgrey text-2xl">
             {"#" + bws_rank.toLocaleString()}
           </div>
         </div>

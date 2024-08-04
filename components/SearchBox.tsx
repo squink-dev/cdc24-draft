@@ -24,12 +24,12 @@ export default function SearchBox({ players, onClick }: SearchBoxProps) {
   );
 
   return (
-    <div id="searchBar">
-      <div className="flex flex-col h-[458px] bg-gray-200 p-4 overflow-y-auto">
+    <div id="searchBox" className="flex flex-col h-[458px] bg-gray-200 p-6">
+      <div className="flex flex-col h-[458px] p-6 overflow-y-scroll scroll-p-4 no-scrollbar">
         <input
           type="text"
           placeholder="Search"
-          className="mb-2 p-2 border border-gray-300"
+          className="mb-2 p-2 border text-black border-gray-300"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />

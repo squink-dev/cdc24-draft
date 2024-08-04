@@ -182,7 +182,7 @@ export default function Home() {
   if (loading) {
     return (
       <>
-        <h1>LOADING</h1>
+        <h1></h1>
       </>
     );
   }
@@ -213,10 +213,16 @@ export default function Home() {
           {/* Already Picked Teams */}
           {/* TODO: Add column header */}
           <div className="flex space-x-4 ">
-            <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
-            <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
+            <div
+              id="subPlayerBG"
+              className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+            ></div>
+            <div
+              id="subPlayerBG"
+              className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+            ></div>
           </div>
-          <div className="border-2 border-cdc-darkgrey">
+          <div className="text-white">
             <SearchBox players={players} onClick={handlePlayerSelect} />
           </div>
         </div>
@@ -224,7 +230,10 @@ export default function Home() {
         {/* Middle Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Large Team Box */}
-          <div className="flex-grow bg-cdc-darkgrey p-4 text-2xl text-white">
+          <div
+            id="mainPlayerBG"
+            className="flex-grow bg-cdc-darkgrey p-4 text-2xl text-white"
+          >
             {/* Add Current Player Cards based on the current team */}
             <CurrentPlayerCard
               username={currentTeamData.captain.username}
@@ -245,6 +254,7 @@ export default function Home() {
           <div className="justify-center items-center flex space-x-4">
             {/* Prev Button */}
             <button
+              id="button"
               onClick={handlePrevPick}
               className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
             >
@@ -264,6 +274,7 @@ export default function Home() {
 
             {/* Undo Button */}
             <button
+              id="button"
               onClick={handleUndoPick}
               className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
             >
@@ -283,6 +294,7 @@ export default function Home() {
 
             {/* Next Button */}
             <button
+              id="button"
               onClick={handleNextPick}
               className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
             >
@@ -307,8 +319,14 @@ export default function Home() {
           {/* Upcoming Teams */}
           {/* TODO: Add column header */}
           <div className="flex space-x-4">
-            <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
-            <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
+            <div
+              id="subPlayerBG"
+              className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+            ></div>
+            <div
+              id="subPlayerBG"
+              className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+            ></div>
           </div>
           {/* Discord Captain Chat */}
           <div className="flex-grow bg-green-screen p-4 border-2 border-cdc-darkgrey"></div>

@@ -22,12 +22,13 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
     const timer = setTimeout(() => {
       setVisible(false);
       setTimeout(onClose, 1000);
-    }, 1000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, [onClose]);
 
   return (
     <div
+      id="screen"
       className={`fixed inset-0 z-10 bg-black bg-opacity-80 flex items-end justify-center transition-opacity duration-500 ${
         visible ? "opacity-100" : "opacity-0"
       }`}
@@ -68,7 +69,8 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
       </div>
 
       <div
-        className={`fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[25%] p-10 bg-white border border-gray-300 shadow-lg transition-opacity duration-500 ${
+        id="draftModal"
+        className={`fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[26%] h-[32%] p-10 shadow-lg transition-opacity duration-500 ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -78,17 +80,25 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
             alt={`${user.username}'s avatar`}
             className="w-32 h-32 absolute top-[-45%]"
           />
-          <h2 className="text-2xl font-bold mt-8">
+          <h2 id="rubik" className="text-2xl text-white mt-8">
             {user.username.toUpperCase()}
           </h2>
-          <h2 className="text-2xl font-bold text-center">TEAM TEMPORARY</h2>
-          <div className="flex justify-between w-full mt-2 text-xl font-semibold">
+          <h2 id="bolsterBold" className="text-2xl text-white text-center">
+            TEAM TEMPORARY
+          </h2>
+          <div
+            id="playBold"
+            className="flex justify-between w-full mt-2 text-xl text-white font-semibold"
+          >
             <span className="text-left">RANK</span>
             <span className="text-right">
               #{user.bws_rank.toLocaleString()}
             </span>
           </div>
-          <p className="mt-2 text-gray-800 w-full h-20 overflow-hidden text-ellipsis">
+          <p
+            id="playBold"
+            className="mt-2 text-cdc-lightgrey w-full h-[100px] pt-2 text-wrap truncate"
+          >
             {about}
           </p>
         </div>

@@ -56,14 +56,32 @@ body {
   text-transform: uppercase;
 }
 
+#mainPlayerBG {
+  background-image: url("../public/elements/current-team-card.png");
+  background-repeat: no-repeat;
+}
+
 #subPlayerCard {
   font-family: "Rubik", sans-serif;
   text-transform: uppercase;
 }
 
-#searchBar {
+#subPlayerBG {
+  background-image: url("../public/elements/team-card.png");
+  background-repeat: no-repeat;
+}
+
+#searchBox {
   font-family: "PlayBold", sans-serif;
   text-transform: uppercase;
+
+  background-image: url("../public/elements/searchBox.png");
+  background-repeat: no-repeat;
+}
+
+#searchBoxOverlay {
+  background-image: url("../public/elements/searchBox-overlay.png");
+  background-repeat: no-repeat;
 }
 
 #footer {
@@ -117,6 +135,31 @@ body {
 #drafted {
   background-image: url("../public/elements/drafted-bg.png");
   background-repeat: no-repeat;
+}
+
+#draftModal {
+  background-image: url("../public/elements/draftModal.png");
+  background-repeat: no-repeat;
+}
+
+#screen {
+  background-image: url("../public/elements/screen.png");
+  background-repeat: no-repeat;
+}
+
+#button {
+  background-image: url("../public/elements/button.png");
+  background-repeat: no-repeat;
+}
+
+#scrollBar {
+  height: 458px;
+  overflow: hidden;
+}
+
+#scrollBar::-webkit-scrollbar {
+  width: 0px;
+  display: none;
 }
 
 @layer utilities {
