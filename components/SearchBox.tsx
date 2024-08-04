@@ -40,6 +40,7 @@ export default function SearchBox({ players, onClick }: SearchBoxProps) {
               username={player.username}
               avatar_url={player.avatar_url}
               bws_rank={player.bws_rank}
+              isDark={true}
               onClick={onClick ? () => onClick(player) : undefined}
             />
           ))}

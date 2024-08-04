@@ -1,15 +1,20 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 
 interface PlayerCardProps {
   username: string;
   avatar_url: string;
   bws_rank: number;
+  accuracy: number;
+  bws_badges: number;
 }
 
 const CurrentPlayerCard: React.FC<PlayerCardProps> = ({
   username,
   avatar_url,
   bws_rank,
+  accuracy,
+  bws_badges,
 }) => {
   return (
     <div id="mainPlayerCard">
@@ -24,7 +29,7 @@ const CurrentPlayerCard: React.FC<PlayerCardProps> = ({
 
           <div id="playBold">
             <div className="text-cdc-lightgrey text-lg">
-              Accuracy: 98.5%, Badges: 25
+              Accuracy: {accuracy.toPrecision(4)}%, Badges: {bws_badges}
             </div>
           </div>
         </div>

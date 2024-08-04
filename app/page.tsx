@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import FooterModal from "@/components/FooterModal";
 import SearchBox from "@/components/SearchBox";
 import playerData from "@/public/playerData.json";
@@ -13,6 +13,11 @@ import {
 } from "@/interfaces/interfaces";
 import DraftedModal from "@/components/DraftedModal";
 import CurrentPlayerCard from "@/components/CurrentPlayerCard";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "@/app/toastify.css";
+import next from "next";
+import PlayerCard from "@/components/PlayerCard";
 
 const fetchPlayerDetails = async (userId: number): Promise<User> => {
   const response = await fetch(`/api/user/${userId}`);
@@ -55,6 +60,14 @@ export default function Home() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [pickedPlayers, setPickedPlayers] = useState<PickedPlayer[]>([]);
 
+  const [currentRound, setCurrentRound] = useState(0); // 0 - 7 snaking
+  const [currentTeam, setCurrentTeam] = useState(0); // 0 - 7
+  const [currentPick, setCurrentPick] = useState(0); // current pick (pointer for pickedPlayers + round/team state)
+  const [prevTeams, setPrevTeams] = useState<number[]>([]);
+  const [nextTeams, setNextTeams] = useState<number[]>([1, 2]);
+
+  const isReverse = currentRound % 2 === 1;
+
   // Initialize data
   useEffect(() => {
     const initializeData = async () => {
@@ -68,23 +81,28 @@ export default function Home() {
     initializeData();
   }, []);
 
-  const [currentRound, setCurrentRound] = useState(0); // 0 - 7 snaking
-  const [currentTeam, setCurrentTeam] = useState(0); // 0 - 7
-  const [currentPick, setCurrentPick] = useState(0); // current pick (pointer for pickedPlayers + round/team state)
-  // TODO: Add next team and prev team states
-
-  const isReverse = currentRound % 2 === 1;
   console.log("isReverse", isReverse);
   console.log("Round: ", currentRound);
   console.log("Team: ", currentTeam);
   console.log("Current Pick: ", currentPick);
 
   const handlePlayerSelect = (player: Player) => {
-    if (currentTeam === 7 && !isReverse) {
+    if (
+      currentTeam === 7 &&
+      !isReverse &&
+      pickedPlayers.length - 1 === currentPick
+    ) {
       handleNextPick();
-    } else if (currentTeam === 0 && isReverse) {
+    } else if (
+      currentTeam === 0 &&
+      isReverse &&
+      pickedPlayers.length - 1 === currentPick
+    ) {
       handleNextPick();
     } else if (currentRound + 1 <= teams[currentTeam].players.length) {
+      toast.error(
+        teams[currentTeam].captain.username_clean + " already picked"
+      );
       return;
     }
 
@@ -122,32 +140,129 @@ export default function Home() {
     }
   };
 
+  // Absolutely stupid function to simulate the upcoming 2 teams cause I can't use my brain rn
+  // I hate this
+  const updateNextTeams = (isPrev: boolean) => {
+    let nextTeams: number[] = [];
+    let nextTeam = currentTeam;
+    let nextRound = currentRound;
+    let nextPick = currentPick;
+    let nextReverse = isReverse;
+    let lastTeam = -1;
+    let i = 0;
+
+    if (isPrev) {
+      for (let i = 0; i < 2; i++) {
+        if (nextReverse) {
+          if (currentTeam === 7) {
+            nextRound -= 1;
+          } else {
+            nextTeam += 1;
+          }
+        } else {
+          if (currentTeam === 0) {
+            nextRound -= 1;
+          } else {
+            nextTeam -= 1;
+          }
+        }
+        nextPick--;
+        nextReverse = nextRound % 2 === 1;
+      }
+    }
+
+    while (nextTeams.length < 2) {
+      lastTeam = nextTeam;
+
+      if (nextPick < 8 * 8 - 1) {
+        if (nextReverse) {
+          if (nextTeam === 0) {
+            nextRound++;
+          } else {
+            nextTeam--;
+          }
+        } else {
+          if (nextTeam === 7) {
+            nextRound++;
+          } else {
+            nextTeam++;
+          }
+        }
+
+        nextPick++;
+        nextReverse = nextRound % 2 === 1;
+
+        if (i === 0) {
+          i++;
+          continue;
+        } else if (nextTeams.length === 0 && nextTeam === lastTeam) {
+          continue;
+        } else if (nextTeams.length === 1 && nextTeam === nextTeams.at(-1)) {
+          continue;
+        }
+
+        nextTeams.push(nextTeam);
+      }
+    }
+
+    setNextTeams(nextTeams);
+  };
+
+  // im stupid so we do this
+  // TODO: Fix showing in reverse
+  const updatePrevTeams = () => {
+    let nextTeam = currentTeam;
+    let nextRound = currentRound;
+
+    if (isReverse) {
+      if (nextTeam === 0) {
+        nextRound++;
+      } else {
+        nextTeam--;
+      }
+    } else {
+      if (nextTeam === 7) {
+        nextRound++;
+      } else {
+        nextTeam++;
+      }
+    }
+
+    if (nextTeam !== currentTeam) {
+      setPrevTeams([currentTeam, prevTeams[0]]);
+    }
+  };
+
   const handlePrevPick = () => {
     if (currentPick > 0) {
       if (pickedPlayers.length - 1 === currentPick) {
         handleUndoPick();
       }
 
-      let newTeam = currentTeam;
-      let newRound = currentRound;
+      let prevTeam = currentTeam;
+      let prevRound = currentRound;
 
       if (isReverse) {
         if (currentTeam === 7) {
-          newRound -= 1;
+          prevRound -= 1;
         } else {
-          newTeam += 1;
+          prevTeam += 1;
         }
       } else {
         if (currentTeam === 0) {
-          newRound -= 1;
+          prevRound -= 1;
         } else {
-          newTeam -= 1;
+          prevTeam -= 1;
         }
       }
 
-      setCurrentTeam(newTeam);
-      setCurrentRound(newRound);
+      setPrevTeams([]);
+
+      setCurrentTeam(prevTeam);
+      setCurrentRound(prevRound);
       setCurrentPick(currentPick - 1);
+
+      updateNextTeams(true);
     }
   };
 
@@ -155,30 +270,35 @@ export default function Home() {
     if (currentPick < 8 * 8 - 1 && pickedPlayers.length - 1 === currentPick) {
       setSelectedPlayer(null);
 
-      let newTeam = currentTeam;
-      let newRound = currentRound;
+      let nextTeam = currentTeam;
+      let nextRound = currentRound;
 
       if (isReverse) {
         if (currentTeam === 0) {
-          newRound++;
+          nextRound++;
         } else {
-          newTeam--;
+          nextTeam--;
         }
       } else {
         if (currentTeam === 7) {
-          newRound++;
+          nextRound++;
         } else {
-          newTeam++;
+          nextTeam++;
         }
       }
 
-      setCurrentTeam(newTeam);
-      setCurrentRound(newRound);
+      updatePrevTeams();
+
+      setCurrentTeam(nextTeam);
+      setCurrentRound(nextRound);
       setCurrentPick(currentPick + 1);
+
+      updateNextTeams(false);
+    } else {
+      toast.error("Select a player to continue");
     }
   };
 
-  // TODO: Loading view
   if (loading) {
     return (
       <>
@@ -187,158 +307,265 @@ export default function Home() {
     );
   }
 
-  const currentTeamData = teams[currentTeam];
-
   return (
-    <main className="min-h-screen flex flex-col">
-      {/* Top Bar */}
-      <div id="top">
-        <div className="columns-3 gap-4">
-          <div className="text-cdc-darkred text-3xl text-right">
-            Last Pick: jiaxunjason
-          </div>
-          <div className="pt-2 pb-2 text-white text-3xl text-center mix-blend-difference">
-            Currently Picking: {teams[currentTeam].captain.username_clean}
-          </div>
-          <div className="text-cdc-darkred text-3xl text-left">
-            Next Pick: jiaxunjason
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <main className="min-h-screen flex flex-col">
+        {/* Top Bar */}
+        <div id="top">
+          <div className="columns-3 gap-4">
+            <div className="text-cdc-darkred text-3xl text-right">
+              Last Pick:{" "}
+              {prevTeams[0] !== undefined && (
+                <>{teams[prevTeams[0]].captain.username_clean}</>
+              )}
+            </div>
+            <div className="pt-2 pb-2 text-white text-3xl text-center mix-blend-difference">
+              Currently Picking: {teams[currentTeam].captain.username_clean}
+            </div>
+            <div className="text-cdc-darkred text-3xl text-left">
+              Next Pick:{" "}
+              {nextTeams[0] !== undefined && (
+                <>{teams[nextTeams[0]].captain.username_clean}</>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Content Area */}
-      <div className="flex-grow flex">
-        {/* First Column */}
-        <div className="flex flex-col w-1/3 p-4 space-y-4">
-          {/* Already Picked Teams */}
-          <div className="flex space-x-4 ">
-            <div
-              id="subPlayerBG"
-              className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
-            ></div>
-            <div
-              id="subPlayerBG"
-              className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
-            ></div>
+        {/* Main Content Area */}
+        <div className="flex-grow flex">
+          {/* First Column */}
+          <div className="flex flex-col w-1/3 p-4 space-y-4">
+            {/* Already Picked Teams */}
+            <div className="flex space-x-4 ">
+              <div
+                id="subPlayerBG"
+                className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+              >
+                {prevTeams[1] !== undefined && (
+                  <>
+                    <PlayerCard
+                      username={teams[prevTeams[1]].captain.username}
+                      avatar_url={teams[prevTeams[1]].captain.avatar_url}
+                      bws_rank={teams[prevTeams[1]].captain.bws_rank}
+                      isDark={false}
+                    />
+                    {teams[prevTeams[1]].players.map((player, index) => (
+                      <PlayerCard
+                        key={index}
+                        username={player.username}
+                        avatar_url={player.avatar_url}
+                        bws_rank={player.bws_rank}
+                        isDark={false}
+                      />
+                    ))}
+                  </>
+                )}
+              </div>
+              <div
+                id="subPlayerBG"
+                className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
+              >
+                {prevTeams[0] !== undefined && (
+                  <>
+                    <PlayerCard
+                      username={teams[prevTeams[0]].captain.username}
+                      avatar_url={teams[prevTeams[0]].captain.avatar_url}
+                      bws_rank={teams[prevTeams[0]].captain.bws_rank}
+                      isDark={false}
+                    />
+                    {teams[prevTeams[0]].players.map((player, index) => (
+                      <PlayerCard
+                        key={index}
+                        username={player.username}
+                        avatar_url={player.avatar_url}
+                        bws_rank={player.bws_rank}
+                        isDark={false}
+                      />
+                    ))}
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="text-white">
+              <SearchBox players={players} onClick={handlePlayerSelect} />
+            </div>
           </div>
-          <div className="text-white">
-            <SearchBox players={players} onClick={handlePlayerSelect} />
-          </div>
-        </div>
 
-        {/* Middle Column */}
-        <div className="flex flex-col w-1/3 p-4 space-y-4">
-          {/* Large Team Box */}
-          <div
-            id="mainPlayerBG"
-            className="flex-grow bg-cdc-darkgrey p-4 text-2xl text-white"
-          >
-            {/* Add Current Player Cards based on the current team */}
-            <CurrentPlayerCard
-              username={currentTeamData.captain.username}
-              avatar_url={currentTeamData.captain.avatar_url}
-              bws_rank={currentTeamData.captain.bws_rank}
-            />
-            {currentTeamData.players.map((player, index) => (
+          {/* Middle Column */}
+          <div className="flex flex-col w-1/3 p-4 space-y-4">
+            {/* Large Team Box */}
+            <div
+              id="mainPlayerBG"
+              className="flex-grow bg-cdc-darkgrey p-4 text-2xl text-white"
+            >
+              {/* Add Current Player Cards based on the current team */}
               <CurrentPlayerCard
-                key={index}
-                username={player.username}
-                avatar_url={player.avatar_url}
-                bws_rank={player.bws_rank}
+                username={teams[currentTeam].captain.username}
+                avatar_url={teams[currentTeam].captain.avatar_url}
+                bws_rank={teams[currentTeam].captain.bws_rank}
+                accuracy={teams[currentTeam].captain.accuracy}
+                bws_badges={teams[currentTeam].captain.tournament_badge_count}
               />
-            ))}
+              {teams[currentTeam].players.map((player, index) => {
+                console.log(`Player ${index}:`, player); // Log each player's data
+                // Weird bug ignore, it works only this way...
+                return (
+                  <CurrentPlayerCard
+                    key={index}
+                    username={player.username}
+                    avatar_url={player.avatar_url}
+                    bws_rank={player.bws_rank}
+                    accuracy={player.accuracy}
+                    bws_badges={player.tournamentBadgeCount}
+                  />
+                );
+              })}
+            </div>
+            {/* Buttons Area */}
+            {/* TODO: Move to components*/}
+            <div className="justify-center items-center flex space-x-4">
+              {/* Prev Button */}
+              <button
+                id="button"
+                onClick={handlePrevPick}
+                className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              {/* Undo Button */}
+              <button
+                id="button"
+                onClick={handleUndoPick}
+                className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M9.53 2.47a.75.75 0 0 1 0 1.06L4.81 8.25H15a6.75 6.75 0 0 1 0 13.5h-3a.75.75 0 0 1 0-1.5h3a5.25 5.25 0 1 0 0-10.5H4.81l4.72 4.72a.75.75 0 1 1-1.06 1.06l-6-6a.75.75 0 0 1 0-1.06l6-6a.75.75 0 0 1 1.06 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              {/* Next Button */}
+              <button
+                id="button"
+                onClick={handleNextPick}
+                className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
-          {/* Buttons Area */}
-          {/* TODO: Grey out and make unclickable if event not allowed */}
-          <div className="justify-center items-center flex space-x-4">
-            {/* Prev Button */}
-            <button
-              id="button"
-              onClick={handlePrevPick}
-              className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
 
-            {/* Undo Button */}
-            <button
-              id="button"
-              onClick={handleUndoPick}
-              className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
+          {/* Third Column */}
+          <div className="flex flex-col w-1/3 p-4 space-y-4">
+            {/* Upcoming Teams */}
+            <div className="flex space-x-4">
+              <div
+                id="subPlayerBG"
+                className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M9.53 2.47a.75.75 0 0 1 0 1.06L4.81 8.25H15a6.75 6.75 0 0 1 0 13.5h-3a.75.75 0 0 1 0-1.5h3a5.25 5.25 0 1 0 0-10.5H4.81l4.72 4.72a.75.75 0 1 1-1.06 1.06l-6-6a.75.75 0 0 1 0-1.06l6-6a.75.75 0 0 1 1.06 0Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
-
-            {/* Next Button */}
-            <button
-              id="button"
-              onClick={handleNextPick}
-              className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="size-6 stroke-cdc-darkred stroke-2 translate-x-20"
+                {nextTeams[0] !== undefined && (
+                  <>
+                    <PlayerCard
+                      username={teams[nextTeams[0]].captain.username}
+                      avatar_url={teams[nextTeams[0]].captain.avatar_url}
+                      bws_rank={teams[nextTeams[0]].captain.bws_rank}
+                      isDark={false}
+                    />
+                    {teams[nextTeams[0]].players.map((player, index) => (
+                      <PlayerCard
+                        key={index}
+                        username={player.username}
+                        avatar_url={player.avatar_url}
+                        bws_rank={player.bws_rank}
+                        isDark={false}
+                      />
+                    ))}
+                  </>
+                )}
+              </div>
+              <div
+                id="subPlayerBG"
+                className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
+                {nextTeams[1] !== undefined && (
+                  <>
+                    <PlayerCard
+                      username={teams[nextTeams[1]].captain.username}
+                      avatar_url={teams[nextTeams[1]].captain.avatar_url}
+                      bws_rank={teams[nextTeams[1]].captain.bws_rank}
+                      isDark={false}
+                    />
+                    {teams[nextTeams[1]].players.map((player, index) => (
+                      <PlayerCard
+                        key={index}
+                        username={player.username}
+                        avatar_url={player.avatar_url}
+                        bws_rank={player.bws_rank}
+                        isDark={false}
+                      />
+                    ))}
+                  </>
+                )}
+              </div>
+            </div>
+            {/* Discord Captain Chat */}
+            <div className="flex-grow bg-green-screen p-4 border-2 border-cdc-darkgrey"></div>
           </div>
         </div>
 
-        {/* Third Column */}
-        <div className="flex flex-col w-1/3 p-4 space-y-4">
-          {/* Upcoming Teams */}
-          <div className="flex space-x-4">
-            <div
-              id="subPlayerBG"
-              className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
-            ></div>
-            <div
-              id="subPlayerBG"
-              className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-grey"
-            ></div>
-          </div>
-          {/* Discord Captain Chat */}
-          <div className="flex-grow bg-green-screen p-4 border-2 border-cdc-darkgrey"></div>
-        </div>
-      </div>
-
-      <FooterModal />
-      {selectedPlayer && (
-        <DraftedModal
-          user={selectedPlayer}
-          about={selectedPlayer.about}
-          onClose={() => setSelectedPlayer(null)}
-        />
-      )}
-    </main>
+        <FooterModal />
+        {selectedPlayer && (
+          <DraftedModal
+            user={selectedPlayer}
+            about={selectedPlayer.about}
+            teamName={teams[currentTeam].captain.username_clean}
+            onClose={() => setSelectedPlayer(null)}
+          />
+        )}
+      </main>
+    </>
   );
 }

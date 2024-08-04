@@ -7,7 +7,7 @@ export interface User {
   country: string;
   level: string;
   pp_raw: string;
-  accuracy: string;
+  accuracy: number;
   avatar_url: string;
   badge_count: string;
   tournament_badge_count: number;

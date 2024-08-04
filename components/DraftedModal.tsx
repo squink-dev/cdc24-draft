@@ -7,12 +7,14 @@ import { User } from "@/interfaces/interfaces";
 interface DraftedModalProps {
   user: User;
   about: string;
+  teamName: string;
   onClose: () => void;
 }
 
 const DraftedModal: React.FC<DraftedModalProps> = ({
   user,
   about,
+  teamName,
   onClose,
 }) => {
   const [visible, setVisible] = useState(false);
@@ -57,7 +59,8 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
         className="fixed z-40 text-cdc-red text-right right-10 -top-5"
       >
         <div className="animate-draft-scroll">
-          Team<br></br>jiaxunjason
+          Team<br></br>
+          {teamName}
         </div>
       </div>
 
@@ -65,7 +68,7 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
         id="name"
         className="fixed z-20 text-right -right-[25%] opacity-100 text-transparent text-nowrap"
       >
-        <div className="animate-rightleft-scrollslow">gender bender</div>
+        <div className="animate-rightleft-scrollslow">{user.username}</div>
       </div>
 
       <div
@@ -84,13 +87,13 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
             {user.username.toUpperCase()}
           </h2>
           <h2 id="bolsterBold" className="text-2xl text-white text-center">
-            TEAM TEMPORARY
+            Team {teamName}
           </h2>
           <div
             id="playBold"
             className="flex justify-between w-full mt-2 text-xl text-white font-semibold"
           >
-            <span className="text-left">RANK</span>
+            <span className="text-left">Rank</span>
             <span className="text-right">
               #{user.bws_rank.toLocaleString()}
             </span>
