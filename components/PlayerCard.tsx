@@ -7,12 +7,12 @@ interface PlayerCardProps {
   onClick?: () => void;
 }
 
-const PlayerCard: React.FC<PlayerCardProps> = ({
+export default function PlayerCard({
   username,
   avatar_url,
   bws_rank,
   onClick,
-}) => {
+}: PlayerCardProps) {
   return (
     <div id="subPlayerCard">
       <div
@@ -35,6 +35,4 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
       </div>
     </div>
   );
-};
-
-export default PlayerCard;
+}

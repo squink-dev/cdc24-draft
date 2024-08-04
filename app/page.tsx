@@ -1,7 +1,194 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import FooterModal from "@/components/FooterModal";
 import SearchBox from "@/components/SearchBox";
+import playerData from "@/public/playerData.json";
+import {
+  User,
+  Player,
+  Captain,
+  Team,
+  PickedPlayer,
+} from "@/interfaces/interfaces";
+import DraftedModal from "@/components/DraftedModal";
+import CurrentPlayerCard from "@/components/CurrentPlayerCard";
+
+const fetchPlayerDetails = async (userId: number): Promise<User> => {
+  const response = await fetch(`/api/user/${userId}`);
+  const data = await response.json();
+  return data;
+};
+
+const fetchData = async (): Promise<{ teams: Team[]; players: Player[] }> => {
+  const { players, captains } = playerData;
+  const playerDetails = await Promise.all(
+    players.map((p) => fetchPlayerDetails(p.user_id))
+  );
+  const captainDetails = await Promise.all(
+    captains.map((c) => fetchPlayerDetails(c.user_id))
+  );
+
+  const enrichedPlayers: Player[] = players.map((p, index) => ({
+    ...p,
+    ...playerDetails[index],
+  }));
+
+  const enrichedCaptains: Captain[] = captains.map((c, index) => ({
+    ...c,
+    ...captainDetails[index],
+  }));
+
+  const teams: Team[] = enrichedCaptains.map((captain) => ({
+    captain,
+    players: [],
+  }));
+
+  return { teams, players: enrichedPlayers };
+};
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [pickedPlayers, setPickedPlayers] = useState<PickedPlayer[]>([]);
+
+  // Initialize data
+  useEffect(() => {
+    const initializeData = async () => {
+      setLoading(true);
+      const { teams, players } = await fetchData();
+      console.log(teams, players);
+      setTeams(teams);
+      setPlayers(players);
+      setLoading(false);
+    };
+    initializeData();
+  }, []);
+
+  const [currentRound, setCurrentRound] = useState(0); // 0 - 7 snaking
+  const [currentTeam, setCurrentTeam] = useState(0); // 0 - 7
+  const [currentPick, setCurrentPick] = useState(0); // current pick (pointer for pickedPlayers + round/team state)
+  // TODO: Add next team and prev team states
+
+  const isReverse = currentRound % 2 === 1;
+  console.log("isReverse", isReverse);
+  console.log("Round: ", currentRound);
+  console.log("Team: ", currentTeam);
+  console.log("Current Pick: ", currentPick);
+
+  const handlePlayerSelect = (player: Player) => {
+    if (currentTeam === 7 && !isReverse) {
+      handleNextPick();
+    } else if (currentTeam === 0 && isReverse) {
+      handleNextPick();
+    } else if (currentRound + 1 <= teams[currentTeam].players.length) {
+      return;
+    }
+
+    setSelectedPlayer(player);
+    // Update team with selected player
+    const updatedTeams = [...teams]; // shallow copy
+    updatedTeams[currentTeam].players.push(player);
+    setTeams(updatedTeams);
+
+    // Add player to picked players & remove from available players
+    const originalIndex = players.findIndex(
+      (p) => p.user_id === player.user_id
+    );
+    setPickedPlayers([...pickedPlayers, { player, originalIndex }]);
+    setPlayers(players.filter((p) => p.user_id !== player.user_id));
+  };
+
+  const handleUndoPick = () => {
+    if (pickedPlayers.length > 0 && pickedPlayers.length - 1 === currentPick) {
+      setSelectedPlayer(null);
+
+      // Remove player from team
+      const { player, originalIndex } = pickedPlayers[pickedPlayers.length - 1];
+      const updatedTeams = [...teams];
+      updatedTeams[currentTeam].players = updatedTeams[
+        currentTeam
+      ].players.filter((p) => p.user_id !== player.user_id);
+      setTeams(updatedTeams);
+
+      // Remove player from picked players & add back to available players
+      setPickedPlayers(pickedPlayers.slice(0, -1));
+      const updatedPlayers = [...players];
+      updatedPlayers.splice(originalIndex, 0, player);
+      setPlayers(updatedPlayers);
+    }
+  };
+
+  const handlePrevPick = () => {
+    if (currentPick > 0) {
+      if (pickedPlayers.length - 1 === currentPick) {
+        handleUndoPick();
+      }
+
+      let newTeam = currentTeam;
+      let newRound = currentRound;
+
+      if (isReverse) {
+        if (currentTeam === 7) {
+          newRound -= 1;
+        } else {
+          newTeam += 1;
+        }
+      } else {
+        if (currentTeam === 0) {
+          newRound -= 1;
+        } else {
+          newTeam -= 1;
+        }
+      }
+
+      setCurrentTeam(newTeam);
+      setCurrentRound(newRound);
+      setCurrentPick(currentPick - 1);
+    }
+  };
+
+  const handleNextPick = () => {
+    if (currentPick < 8 * 8 - 1 && pickedPlayers.length - 1 === currentPick) {
+      setSelectedPlayer(null);
+
+      let newTeam = currentTeam;
+      let newRound = currentRound;
+
+      if (isReverse) {
+        if (currentTeam === 0) {
+          newRound++;
+        } else {
+          newTeam--;
+        }
+      } else {
+        if (currentTeam === 7) {
+          newRound++;
+        } else {
+          newTeam++;
+        }
+      }
+
+      setCurrentTeam(newTeam);
+      setCurrentRound(newRound);
+      setCurrentPick(currentPick + 1);
+    }
+  };
+
+  // TODO: Loading view
+  if (loading) {
+    return (
+      <>
+        <h1>LOADING</h1>
+      </>
+    );
+  }
+
+  const currentTeamData = teams[currentTeam];
+
   return (
     <main className="min-h-screen flex flex-col">
       {/* Top Bar */}
@@ -11,7 +198,7 @@ export default function Home() {
             Last Pick: jiaxunjason
           </div>
           <div className="pt-2 pb-2 text-white text-3xl text-center mix-blend-difference">
-            Currently Picking: jiaxunjason
+            Currently Picking: {teams[currentTeam].captain.username_clean}
           </div>
           <div className="text-cdc-darkred text-3xl text-left">
             Next Pick: jiaxunjason
@@ -30,24 +217,37 @@ export default function Home() {
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
           </div>
           <div className="border-2 border-cdc-darkgrey">
-            <SearchBox />
+            <SearchBox players={players} onClick={handlePlayerSelect} />
           </div>
         </div>
 
         {/* Middle Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Large Team Box */}
-          <div className="flex-grow bg-cdc-darkgrey p-4 pt-10 text-2xl text-white">
-            {/* TODO: Keep this? Duplicate text to the header above */}
-            <div id="bolsterBold">
-              <div className="-translate-y-8">
-                <text>Team jiaxunjason</text>
-              </div>
-            </div>
+          <div className="flex-grow bg-cdc-darkgrey p-4 text-2xl text-white">
+            {/* Add Current Player Cards based on the current team */}
+            <CurrentPlayerCard
+              username={currentTeamData.captain.username}
+              avatar_url={currentTeamData.captain.avatar_url}
+              bws_rank={currentTeamData.captain.bws_rank}
+            />
+            {currentTeamData.players.map((player, index) => (
+              <CurrentPlayerCard
+                key={index}
+                username={player.username}
+                avatar_url={player.avatar_url}
+                bws_rank={player.bws_rank}
+              />
+            ))}
           </div>
           {/* Buttons Area */}
+          {/* TODO: Grey out and make unclickable if event not allowed */}
           <div className="justify-center items-center flex space-x-4">
-            <button className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow">
+            {/* Prev Button */}
+            <button
+              onClick={handlePrevPick}
+              className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -62,7 +262,11 @@ export default function Home() {
               </svg>
             </button>
 
-            <button className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow">
+            {/* Undo Button */}
+            <button
+              onClick={handleUndoPick}
+              className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -76,7 +280,12 @@ export default function Home() {
                 />
               </svg>
             </button>
-            <button className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow">
+
+            {/* Next Button */}
+            <button
+              onClick={handleNextPick}
+              className="bg-cdc-red border-4 border-cdc-darkred py-2 flex-grow"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -107,6 +316,13 @@ export default function Home() {
       </div>
 
       <FooterModal />
+      {selectedPlayer && (
+        <DraftedModal
+          user={selectedPlayer}
+          about={selectedPlayer.about}
+          onClose={() => setSelectedPlayer(null)}
+        />
+      )}
     </main>
   );
 }

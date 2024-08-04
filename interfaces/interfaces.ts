@@ -9,7 +9,25 @@ export interface User {
   pp_raw: string;
   accuracy: string;
   avatar_url: string;
-  badgeCount: string;
-  tournamentBadgeCount: number;
-  about?: string;
+  badge_count: string;
+  tournament_badge_count: number;
+}
+
+export interface Player extends User {
+  about: string;
+}
+
+export interface Captain extends Player {
+  order: number;
+  username_clean: string;
+}
+
+export interface Team {
+  captain: Captain;
+  players: Player[];
+}
+
+export interface PickedPlayer {
+  player: Player;
+  originalIndex: number;
 }

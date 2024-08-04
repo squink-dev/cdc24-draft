@@ -117,8 +117,8 @@ export async function GET(
       pp_raw: userData.statistics.pp,
       accuracy: userData.statistics.hit_accuracy,
       avatar_url: avatarUrl,
-      badgeCount: badgeCount,
-      tournamentBadgeCount: tourneyBadges,
+      badge_count: badgeCount,
+      tournament_badge_count: tourneyBadges,
     };
 
     await mutex.runExclusive(async () => {
