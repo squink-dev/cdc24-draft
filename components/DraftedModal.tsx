@@ -22,7 +22,7 @@ const DraftedModal: React.FC<DraftedModalProps> = ({
     const timer = setTimeout(() => {
       setVisible(false);
       setTimeout(onClose, 1000);
-    }, 1000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, [onClose]);
 

@@ -211,7 +211,6 @@ export default function Home() {
         {/* First Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Already Picked Teams */}
-          {/* TODO: Add column header */}
           <div className="flex space-x-4 ">
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
@@ -305,7 +304,6 @@ export default function Home() {
         {/* Third Column */}
         <div className="flex flex-col w-1/3 p-4 space-y-4">
           {/* Upcoming Teams */}
-          {/* TODO: Add column header */}
           <div className="flex space-x-4">
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
             <div className="flex-1 bg-gray-200 p-4 h-[430px] border-2 border-cdc-darkgrey"></div>
