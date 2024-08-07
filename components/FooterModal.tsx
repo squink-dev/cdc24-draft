@@ -1,8 +1,27 @@
 "use client";
 
 import { useState } from "react";
+import PlayerList from "./PlayerList";
+import TeamList from "./TeamList";
+import {
+  User,
+  Player,
+  Captain,
+  Team,
+  PickedPlayer,
+} from "@/interfaces/interfaces";
 
-export default function FooterModal() {
+interface FooterModalProps {
+  players: Player[];
+  teams: Team[];
+  pickedPlayers: PickedPlayer[];
+}
+
+export default function FooterModal({
+  players,
+  teams,
+  pickedPlayers,
+}: FooterModalProps) {
   const [isPlayerModalOpen, setPlayerModalOpen] = useState(false);
   const [isTeamModalOpen, setTeamModalOpen] = useState(false);
   const [isAnimating, setAnimating] = useState(false);
@@ -62,18 +81,18 @@ export default function FooterModal() {
       {/* Player List Modal */}
       {isPlayerModalOpen && (
         <div
+          id="screen"
           onClick={handleOverlayClick}
-          className={`fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-end justify-center ${
+          className={`fixed inset-0 bg-black bg-opacity-80 z-50 flex items-end justify-center ${
             isAnimating ? "fade-in" : "fade-out"
           }`}
         >
           <div
-            className={`bg-white p-8 w-[90%] h-[68%] rounded-t-md relative shadow-lg ${
+            className={`bg-cdc-lightgrey p-8 w-[90%] h-[68%] rounded-t-sm relative shadow-lg ${
               isAnimating ? "slide-up" : "slide-down"
             }`}
           >
-            <h1 className="text-xl font-bold mb-4">Full Player List</h1>
-            {/* player list content here */}
+            <PlayerList players={players} />
           </div>
         </div>
       )}
@@ -81,18 +100,18 @@ export default function FooterModal() {
       {/* Team List Modal */}
       {isTeamModalOpen && (
         <div
+          id="screen"
           onClick={handleOverlayClick}
-          className={`fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-end justify-center ${
+          className={`fixed inset-0 bg-black bg-opacity-80 z-50 flex items-end justify-center ${
             isAnimating ? "fade-in" : "fade-out"
           }`}
         >
           <div
-            className={`bg-white p-8 w-[90%] h-[68%] rounded-t-md relative shadow-lg ${
+            className={`bg-cdc-lightgrey p-8 w-[90%] h-[90%] rounded-t-sm relative shadow-lg ${
               isAnimating ? "slide-up" : "slide-down"
             }`}
           >
-            <h1 className="text-xl font-bold mb-4">Full Team List</h1>
-            {/* team list content here */}
+            <TeamList teams={teams} />
           </div>
         </div>
       )}

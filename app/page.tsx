@@ -1,6 +1,6 @@
 "use client";
 
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FooterModal from "@/components/FooterModal";
 import SearchBox from "@/components/SearchBox";
 import playerData from "@/public/playerData.json";
@@ -16,7 +16,6 @@ import CurrentPlayerCard from "@/components/CurrentPlayerCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "@/app/toastify.css";
-import next from "next";
 import PlayerCard from "@/components/PlayerCard";
 
 const fetchPlayerDetails = async (userId: number): Promise<User> => {
@@ -105,6 +104,8 @@ export default function Home() {
       );
       return;
     }
+
+    navigator.clipboard.writeText(player.user_id.toString());
 
     setSelectedPlayer(player);
     // Update team with selected player
@@ -556,7 +557,11 @@ export default function Home() {
           </div>
         </div>
 
-        <FooterModal />
+        <FooterModal
+          players={players}
+          teams={teams}
+          pickedPlayers={pickedPlayers}
+        />
         {selectedPlayer && (
           <DraftedModal
             user={selectedPlayer}
