@@ -28,7 +28,7 @@ export default function PlayerCard({
             alt={`${username}'s avatar`}
             className="w-10 h-10 mr-3"
           />
-          <div className="flex-grow">
+          <div className="flex-grow text-xl">
             <div className="">{username}</div>
           </div>
           <div id="bolsterBold">
@@ -51,11 +51,11 @@ export default function PlayerCard({
             alt={`${username}'s avatar`}
             className="w-10 h-10 mr-3"
           />
-          <div className="flex-grow">
+          <div className="flex-grow text-base text-cdc-darkgrey">
             <div className="">{username}</div>
           </div>
-          <div id="bolsterBold">
-            <div className="text-cdc-darkgrey text-lg ">
+          <div id="playBold">
+            <div className="text-cdc-darkgrey text-base">
               {"#" + bws_rank.toLocaleString()}
             </div>
           </div>
