@@ -15,7 +15,7 @@ interface TeamListProps {
 
 export default function TeamList({ teams }: TeamListProps) {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-4 gap-4 overflow-y-auto no-scrollbar h-[900px]">
       {teams.map((team, index) => (
         <div
           key={index}

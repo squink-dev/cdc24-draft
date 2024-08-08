@@ -8,7 +8,7 @@ interface PlayerListProps {
 
 export default function PlayerList({ players }: PlayerListProps) {
   return (
-    <div className="grid grid-cols-5 gap-0 overflow-y-auto h-[670px]">
+    <div className="grid grid-cols-5 gap-0 overflow-y-auto h-[670px] no-scrollbar">
       {players.map((player, index) => (
         <div
           key={index}

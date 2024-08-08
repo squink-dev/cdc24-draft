@@ -421,7 +421,6 @@ export default function Home() {
               />
               {teams[currentTeam].players.map((player, index) => {
                 console.log(`Player ${index}:`, player); // Log each player's data
-                // Weird bug ignore, it works only this way...
                 return (
                   <CurrentPlayerCard
                     key={index}
@@ -429,7 +428,7 @@ export default function Home() {
                     avatar_url={player.avatar_url}
                     bws_rank={player.bws_rank}
                     accuracy={player.accuracy}
-                    bws_badges={player.tournamentBadgeCount}
+                    bws_badges={player.tournament_badge_count}
                   />
                 );
               })}
