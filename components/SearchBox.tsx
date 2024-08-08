@@ -24,7 +24,7 @@ export default function SearchBox({ players, onClick }: SearchBoxProps) {
   );
 
   return (
-    <div id="searchBox" className="flex flex-col h-[462px] bg-gray-200 p-6">
+    <div id="searchBox" className="flex flex-col h-[460px] bg-gray-200 p-6">
       <div className="flex flex-col h-[458px] p-6 overflow-y-scroll scroll-p-4 no-scrollbar">
         <input
           type="text"

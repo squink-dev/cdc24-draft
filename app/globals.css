@@ -153,18 +153,17 @@ body {
   background-repeat: no-repeat;
 }
 
-#scrollBar {
-  height: 458px;
-  overflow: hidden;
-}
-
-#scrollBar::-webkit-scrollbar {
-  width: 0px;
-  display: none;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
