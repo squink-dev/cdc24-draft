@@ -72,6 +72,24 @@ body {
   background-size: cover;
 }
 
+#teamlistBG {
+  background-image: url("../public/elements/teamlist-card.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#teamlistfooterBG {
+  background-image: url("../public/elements/teamlist-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#playerlistfooterBG {
+  background-image: url("../public/elements/playerlist-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 #searchBox {
   font-family: "PlayBold", sans-serif;
   text-transform: uppercase;

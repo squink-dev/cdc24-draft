@@ -20,9 +20,9 @@ export default function TeamList({ teams }: TeamListProps) {
         <div
           key={index}
           className="border-2 border-cdc-darkgrey p-4 bg-gray-200 min-h-[430px]"
-          id="subPlayerBG"
+          id="teamlistBG"
         >
-          <div className="flex flex-col space-y-2">
+          <div id="rubik" className="flex flex-col space-y-2">
             <PlayerCard
               username={team.captain.username}
               avatar_url={team.captain.avatar_url}

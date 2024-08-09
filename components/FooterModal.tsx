@@ -88,6 +88,7 @@ export default function FooterModal({
           }`}
         >
           <div
+            id="playerlistfooterBG"
             className={`bg-cdc-lightgrey p-8 w-[90%] h-[68%] rounded-t-sm relative shadow-lg ${
               isAnimating ? "slide-up" : "slide-down"
             }`}
@@ -107,6 +108,7 @@ export default function FooterModal({
           }`}
         >
           <div
+            id="teamlistfooterBG"
             className={`bg-cdc-lightgrey p-8 w-[90%] h-[90%] rounded-t-sm relative shadow-lg ${
               isAnimating ? "slide-up" : "slide-down"
             }`}
