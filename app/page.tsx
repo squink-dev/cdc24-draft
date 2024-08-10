@@ -65,7 +65,7 @@ export default function Home() {
   const [prevTeams, setPrevTeams] = useState<number[]>([]);
   const [nextTeams, setNextTeams] = useState<number[]>([1, 2]);
 
-  const snakeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 7, 6, 5, 4, 3, 2, 1, 0];
+  const snakeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1];
 
   const isReverse = currentRound % 2 === 1;
 
@@ -148,8 +148,10 @@ export default function Home() {
 
     snakeOrderIndex += isPrev ? -1 : 1;
 
-    let nextTeamIndex = snakeOrder[(snakeOrderIndex + 1) % 16];
-    let nextTeamIndex2 = snakeOrder[(snakeOrderIndex + 2) % 16];
+    snakeOrderIndex -= Math.floor(snakeOrderIndex / 8);
+
+    let nextTeamIndex = snakeOrder[(snakeOrderIndex + 1) % snakeOrder.length];
+    let nextTeamIndex2 = snakeOrder[(snakeOrderIndex + 2) % snakeOrder.length];
 
     setNextTeams([nextTeamIndex, nextTeamIndex2]);
   };
@@ -159,8 +161,10 @@ export default function Home() {
 
     snakeOrderIndex += isPrev ? -1 : 1;
 
-    let prevTeamIndex = snakeOrder[(snakeOrderIndex - 1) % 16];
-    let prevTeamIndex2 = snakeOrder[(snakeOrderIndex - 2) % 16];
+    snakeOrderIndex -= Math.floor(snakeOrderIndex / 8);
+
+    let prevTeamIndex = snakeOrder[(snakeOrderIndex - 1) % snakeOrder.length];
+    let prevTeamIndex2 = snakeOrder[(snakeOrderIndex - 2) % snakeOrder.length];
 
     setPrevTeams([prevTeamIndex, prevTeamIndex2]);
   };
