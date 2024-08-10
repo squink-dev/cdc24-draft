@@ -65,6 +65,8 @@ export default function Home() {
   const [prevTeams, setPrevTeams] = useState<number[]>([]);
   const [nextTeams, setNextTeams] = useState<number[]>([1, 2]);
 
+  const snakeOrder = [0, 1, 2, 3, 4, 5, 6, 7, 7, 6, 5, 4, 3, 2, 1, 0];
+
   const isReverse = currentRound % 2 === 1;
 
   // Initialize data
@@ -141,97 +143,26 @@ export default function Home() {
     }
   };
 
-  // Absolutely stupid function to simulate the upcoming 2 teams cause I can't use my brain rn
-  // I hate this
   const updateNextTeams = (isPrev: boolean) => {
-    let nextTeams: number[] = [];
-    let nextTeam = currentTeam;
-    let nextRound = currentRound;
-    let nextPick = currentPick;
-    let nextReverse = isReverse;
-    let lastTeam = -1;
-    let i = 0;
+    let snakeOrderIndex = currentPick;
 
-    if (isPrev) {
-      for (let i = 0; i < 2; i++) {
-        if (nextReverse) {
-          if (currentTeam === 7) {
-            nextRound -= 1;
-          } else {
-            nextTeam += 1;
-          }
-        } else {
-          if (currentTeam === 0) {
-            nextRound -= 1;
-          } else {
-            nextTeam -= 1;
-          }
-        }
-        nextPick--;
-        nextReverse = nextRound % 2 === 1;
-      }
-    }
+    snakeOrderIndex += isPrev ? -1 : 1;
 
-    while (nextTeams.length < 2) {
-      lastTeam = nextTeam;
+    let nextTeamIndex = snakeOrder[(snakeOrderIndex + 1) % 16];
+    let nextTeamIndex2 = snakeOrder[(snakeOrderIndex + 2) % 16];
 
-      if (nextPick < 8 * 8 - 1) {
-        if (nextReverse) {
-          if (nextTeam === 0) {
-            nextRound++;
-          } else {
-            nextTeam--;
-          }
-        } else {
-          if (nextTeam === 7) {
-            nextRound++;
-          } else {
-            nextTeam++;
-          }
-        }
-
-        nextPick++;
-        nextReverse = nextRound % 2 === 1;
-
-        if (i === 0) {
-          i++;
-          continue;
-        } else if (nextTeams.length === 0 && nextTeam === lastTeam) {
-          continue;
-        } else if (nextTeams.length === 1 && nextTeam === nextTeams.at(-1)) {
-          continue;
-        }
-
-        nextTeams.push(nextTeam);
-      }
-    }
-
-    setNextTeams(nextTeams);
+    setNextTeams([nextTeamIndex, nextTeamIndex2]);
   };
 
-  // im stupid so we do this
-  // TODO: Fix showing in reverse
-  const updatePrevTeams = () => {
-    let nextTeam = currentTeam;
-    let nextRound = currentRound;
+  const updatePrevTeams = (isPrev: boolean) => {
+    let snakeOrderIndex = currentPick;
 
-    if (isReverse) {
-      if (nextTeam === 0) {
-        nextRound++;
-      } else {
-        nextTeam--;
-      }
-    } else {
-      if (nextTeam === 7) {
-        nextRound++;
-      } else {
-        nextTeam++;
-      }
-    }
+    snakeOrderIndex += isPrev ? -1 : 1;
 
-    if (nextTeam !== currentTeam) {
-      setPrevTeams([currentTeam, prevTeams[0]]);
-    }
+    let prevTeamIndex = snakeOrder[(snakeOrderIndex - 1) % 16];
+    let prevTeamIndex2 = snakeOrder[(snakeOrderIndex - 2) % 16];
+
+    setPrevTeams([prevTeamIndex, prevTeamIndex2]);
   };
 
   const handlePrevPick = () => {
@@ -257,7 +188,7 @@ export default function Home() {
         }
       }
 
-      setPrevTeams([]);
+      updatePrevTeams(true);
 
       setCurrentTeam(prevTeam);
       setCurrentRound(prevRound);
@@ -288,7 +219,7 @@ export default function Home() {
         }
       }
 
-      updatePrevTeams();
+      updatePrevTeams(false);
 
       setCurrentTeam(nextTeam);
       setCurrentRound(nextRound);
