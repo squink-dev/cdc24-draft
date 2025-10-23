@@ -5,6 +5,7 @@ import path from "path";
 import { Mutex } from "async-mutex";
 import { User } from "@/interfaces/interfaces";
 
+// TODO: Add your client id and secret here (this one has been revoked)
 const OSU_API_BASE_URL = "https://osu.ppy.sh/api/v2";
 const CLIENT_ID = "31915";
 const CLIENT_SECRET = "Lua9uaI2poCETzcvYlcMm85fZiMhsEc6nu47X9zD";
